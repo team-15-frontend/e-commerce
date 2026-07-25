@@ -43,8 +43,8 @@ export default function AddUserForm() {
           register={register}
           rules={{
             pattern: {
-              value: /^\+[1-9]\d{1,14}$/i,
-              message: 'Invalid phone number (must contain country code)',
+              value: /^\d{7,14}$/i,
+              message: 'Invalid phone number',
             },
           }}
           error={errors.phone}

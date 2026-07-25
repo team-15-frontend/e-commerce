@@ -1,8 +1,9 @@
 import { LuHeartCrack } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 
-import { Button } from './Button'
 import { cn } from '@repo/utils'
+
+import { Button } from './Button'
 
 export function Error({ className, message, description, link, linkMessage }) {
   return (

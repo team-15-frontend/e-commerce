@@ -95,7 +95,7 @@ export default function Checkout() {
               rules={{
                 required: 'Phone number is required',
                 pattern: {
-                  value: /^\d{1,14}$/i,
+                  value: /^\d{7,14}$/i,
                   message: 'Invalid phone number',
                 },
               }}
@@ -137,6 +137,7 @@ export default function Checkout() {
             register={register}
             rules={{
               required: 'Address is required',
+              minLength: { value: 5, message: 'Must be at least 5 characters' },
             }}
             type="textarea"
             rows={2}
