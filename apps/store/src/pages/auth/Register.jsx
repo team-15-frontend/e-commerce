@@ -102,7 +102,7 @@ export default function Register() {
             error={errors.password}
           />
 
-          <span className="text-sm text-start">
+          <span className="text-start text-sm">
             Already have an account? <Link to="/login">Login</Link>
           </span>
 

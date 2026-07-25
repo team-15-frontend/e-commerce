@@ -9,12 +9,6 @@ import { filterData, format } from '@repo/utils'
 const EMPTY_ARRAY = []
 
 export default function AdminCarts() {
-  const [searchParams] = useSearchParams()
-
-  const currentPage = searchParams.get('page') || 1
-  const limit = 15
-  const startIndex = (currentPage - 1) * limit
-
   const { data, isLoading, isError, error } = useGetAdminCarts()
   const carts = data?.carts || EMPTY_ARRAY
 
@@ -31,6 +25,10 @@ export default function AdminCarts() {
     ])
   }, [carts])
 
+  const [searchParams] = useSearchParams()
+  const currentPage = searchParams.get('page') || 1
+  const limit = 15
+  const startIndex = (currentPage - 1) * limit
   const page = filteredCarts.slice(startIndex, startIndex + limit)
   const totalPages = Math.ceil(filteredCarts.length / limit)
 

@@ -11,7 +11,7 @@ import {
   TotalProducts,
 } from '@/components/stats/DashboardStats'
 
-import { useGetProducts } from '@repo/api'
+import { useGetProducts, useSearchProducts } from '@repo/api'
 import { Button, Error, FormField, Pagination } from '@repo/ui'
 import { cn, filterData } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'
@@ -21,30 +21,16 @@ const EMPTY_ARRAY = []
 export default function AdminProducts() {
   const [filters, setFilters] = useState(false)
 
-  const [searchParams] = useSearchParams()
   const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm({
     mode: 'onTouched',
     unDebouncedFields: ['category'],
   })
   const { search, category, subcategory } = urlValues
 
-  const currentPage = searchParams.get('page') || 1
-  const limit = 8
-  const apiLimit = 480
-  const apiPage = Math.ceil((currentPage * limit) / apiLimit)
-  const localPageIndex = (currentPage - 1) % (apiLimit / limit)
-  const startIndex = localPageIndex * limit
-
-  const { data, isLoading, isError, error } = useGetProducts({
-    page: apiPage,
-    limit: apiLimit,
+  const { data, isLoading, isError, error } = useSearchProducts({
+    limit: 500,
   })
   const products = data?.products || EMPTY_ARRAY
-
-  const totalProducts = products.length
-  const featuredProducts = products.filter((product) => product.featured).length
-  const inStockTotal = products.filter((product) => product.stock > 0).length
-  const outOfStockTotal = products.filter((product) => product.stock === 0).length
 
   const filteredProducts = useMemo(() => {
     return filterData(products, [
@@ -54,6 +40,15 @@ export default function AdminProducts() {
     ])
   }, [products, search, category, subcategory])
 
+  const totalProducts = filteredProducts.length
+  const featuredProducts = filteredProducts.filter((product) => product.featured).length
+  const inStockTotal = filteredProducts.filter((product) => product.stock > 0).length
+  const outOfStockTotal = filteredProducts.filter((product) => product.stock === 0).length
+
+  const [searchParams] = useSearchParams()
+  const currentPage = searchParams.get('page') || 1
+  const limit = 8
+  const startIndex = (currentPage - 1) * limit
   const page = filteredProducts.slice(startIndex, startIndex + limit)
   const totalPages = Math.ceil(filteredProducts.length / limit)
 

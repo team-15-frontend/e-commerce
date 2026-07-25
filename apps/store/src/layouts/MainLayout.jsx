@@ -7,17 +7,33 @@ import Header from '@/components/Header'
 
 import { useCurrentUser } from '@repo/api'
 import { cn } from '@repo/utils'
+import { toast } from '@repo/utils/toasts'
 
 export default function MainLayout() {
   const { data: user, isLoading } = useCurrentUser()
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
+  const protectedRoutes = [
+    '/profile',
+    '/orders',
+    '/wishlist',
+    '/cart',
+    '/payment',
+    '/checkout',
+    '/order-success',
+  ]
+
   useEffect(() => {
-    if (pathname === '/profile' || pathname === '/wishlist' || pathname === '/cart') {
-      if (isLoading) return
-      if (!user) return navigate('/login')
-    }
+    protectedRoutes.forEach((route) => {
+      if (pathname.startsWith(route)) {
+        if (isLoading) return
+        if (!user) {
+          navigate('/login')
+          toast.error('Login first to access this page.')
+        }
+      }
+    })
   }, [user, isLoading, navigate, pathname])
 
   return (

@@ -21,7 +21,7 @@ export default function PaymentSummary({ order }) {
         <span>${order.totalPrice}</span>
       </div>
 
-      <p className="text-end mt-auto text-xs text-neutral-500">
+      <p className="mt-auto text-end text-xs text-neutral-500">
         Placed on {new Date(order.createdAt).toLocaleDateString()}
       </p>
     </div>

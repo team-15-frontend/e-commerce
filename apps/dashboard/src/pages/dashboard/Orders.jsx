@@ -30,23 +30,14 @@ const EMPTY_ARRAY = []
 export default function AdminOrders() {
   const [selected, setSelected] = useState(null)
 
-  const [searchParams] = useSearchParams()
   const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm({
     mode: 'onTouched',
     unDebouncedFields: ['status', 'payment', 'method'],
   })
   const { search, status, payment, method } = urlValues
 
-  const currentPage = searchParams.get('page') || 1
-  const limit = 15
-  const apiLimit = 480
-  const apiPage = Math.ceil((currentPage * limit) / apiLimit)
-  const localPageIndex = (currentPage - 1) % (apiLimit / limit)
-  const startIndex = localPageIndex * limit
-
   const { data, isLoading, isError, error } = useGetAllOrders({
-    page: apiPage,
-    limit: apiLimit,
+    limit: 500,
   })
   const orders = data?.orders || EMPTY_ARRAY
 
@@ -69,6 +60,10 @@ export default function AdminOrders() {
     ])
   }, [orders, search, status, payment, method])
 
+  const [searchParams] = useSearchParams()
+  const currentPage = searchParams.get('page') || 1
+  const limit = 15
+  const startIndex = (currentPage - 1) * limit
   const page = filteredOrders.slice(startIndex, startIndex + limit)
   const totalPages = Math.ceil(filteredOrders.length / limit)
 
@@ -132,7 +127,8 @@ export default function AdminOrders() {
           </p>
         </div>
         <div className="card p-4 text-nowrap shadow-xs">
-          {data?.total || 0} <span className="text-sm text-neutral-600">total orders</span>
+          {filteredOrders?.length || 0}{' '}
+          <span className="text-sm text-neutral-600">total orders</span>
         </div>
       </div>
 

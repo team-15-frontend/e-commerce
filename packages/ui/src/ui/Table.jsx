@@ -30,7 +30,7 @@ export function Table({
               </td>
             </tr>
           ) : (
-            Array.from({ length: isLoading ? loadingRows || 10 : data.length }).map((_, i) => {
+            Array.from({ length: isLoading ? loadingRows : data.length }).map((_, i) => {
               const row = data?.[i]
 
               return (

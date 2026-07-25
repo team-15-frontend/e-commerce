@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { LuTrash2 } from 'react-icons/lu'
 import { useSearchParams } from 'react-router-dom'
 
-import ProductCard from '@/components/oldproducts/ProductCard'
+import ProductCard from '@/components/products/ProductCard'
 
 import { useClearWishlist, useGetWishlist } from '@repo/api'
 import { Badge, Button, ConfirmDialog, Error, Pagination } from '@repo/ui'
@@ -11,21 +11,19 @@ import { Badge, Button, ConfirmDialog, Error, Pagination } from '@repo/ui'
 const EMPTY_ARRAY = []
 
 export default function Wishlist() {
-  const [searchParams] = useSearchParams()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const { mutate: clearWishlist, isPending: clearingWishlist } = useClearWishlist()
 
+  const { data, isLoading, isError, error } = useGetWishlist()
+  const productsData = data?.wishlist?.products || EMPTY_ARRAY
+
+  const [searchParams] = useSearchParams()
   const currentPage = searchParams.get('page') || 1
   const limit = 8
   const startIndex = (currentPage - 1) * limit
-
-  const { data, isLoading, isError, error } = useGetWishlist()
-  const wishlist = data?.wishlist
-  const productsData = wishlist?.products || EMPTY_ARRAY
-
-  const products = productsData.slice(startIndex, startIndex + limit)
-  const totalPages = Math.ceil(productsData.length / limit)
+  const page = productsData.slice(startIndex, startIndex + limit)
+  const totalPages = Math.ceil(data?.totalProducts / limit)
 
   return (
     <div className="flex flex-1 flex-col gap-4 py-8">
@@ -41,7 +39,7 @@ export default function Wishlist() {
                 'Loading your wishlist...'
               ) : (
                 <Badge>
-                  {products.length} saved product{!(products.length === 1) && 's'}
+                  {data?.totalProducts} saved product{!(data?.totalProducts === 1) && 's'}
                 </Badge>
               )}
             </p>
@@ -51,7 +49,7 @@ export default function Wishlist() {
         <Button
           variant="ghostDanger"
           onClick={() => setIsDialogOpen(true)}
-          disabled={!products || isLoading || clearingWishlist}
+          disabled={!data?.totalProducts || isLoading || clearingWishlist}
         >
           <LuTrash2 /> Clear All
         </Button>
@@ -59,7 +57,7 @@ export default function Wishlist() {
 
       {isError ? (
         <Error message={error?.message} />
-      ) : !products && !isLoading ? (
+      ) : !data?.totalProducts && !isLoading ? (
         <Error
           message="Your wishlist is empty"
           description="
@@ -69,12 +67,10 @@ export default function Wishlist() {
         />
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {Array.from({ length: isLoading ? limit : products.length }).map((_, i) => {
-            const product = products?.[i]
+          {Array.from({ length: isLoading ? limit : page?.length }).map((_, i) => {
+            const product = page?.[i]
 
-            return (
-              <ProductCard key={i} isLoading={isLoading} product={product} wishlist={wishlist} />
-            )
+            return <ProductCard key={i} isLoading={isLoading} product={product} />
           })}
         </div>
       )}

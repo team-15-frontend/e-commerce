@@ -1,6 +1,18 @@
 import { useRef, useState } from 'react'
 
-import { LuHeart, LuMoon, LuSearch, LuShoppingCart, LuSun, LuUser, LuX } from 'react-icons/lu'
+import {
+  LuClipboardList,
+  LuHeart,
+  LuHouse,
+  LuList,
+  LuMoon,
+  LuPackage,
+  LuSearch,
+  LuShoppingCart,
+  LuSun,
+  LuUser,
+  LuX,
+} from 'react-icons/lu'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { useCurrentUser, useGetCart } from '@repo/api'
@@ -30,29 +42,41 @@ export default function Header() {
             <Button
               variant="ghost"
               size="sm"
-              className={cn('text-md', pathname === '/' && 'bg-neutral-200')}
+              className={cn('text-md max-sm:p-2', pathname === '/' && 'bg-neutral-200')}
             >
-              Home
+              <span className="max-sm:hidden">Home</span>
+              <LuHouse className="sm:hidden" />
+              <Tooltip position="bottom" className="sm:hidden">
+                Home
+              </Tooltip>
             </Button>
           </Link>
 
-          <Link to="/products" className="text-inherit max-sm:hidden">
+          <Link to="/products" className="text-inherit">
             <Button
               variant="ghost"
               size="sm"
-              className={cn('text-md', pathname === '/products' && 'bg-neutral-200')}
+              className={cn('text-md max-sm:p-2', pathname === '/products' && 'bg-neutral-200')}
             >
-              Shop
+              <span className="max-sm:hidden">Shop</span>
+              <LuPackage className="sm:hidden" />
+              <Tooltip position="bottom" className="sm:hidden">
+                Shop
+              </Tooltip>
             </Button>
           </Link>
 
-          <Link to="/orders" className="text-inherit max-sm:hidden">
+          <Link to="/orders" className="text-inherit">
             <Button
               variant="ghost"
               size="sm"
-              className={cn('text-md', pathname === '/orders' && 'bg-neutral-200')}
+              className={cn('text-md max-sm:p-2', pathname === '/orders' && 'bg-neutral-200')}
             >
-              Orders
+              <span className="max-sm:hidden">Orders</span>
+              <LuClipboardList className="sm:hidden" />
+              <Tooltip position="bottom" className="sm:hidden">
+                Orders
+              </Tooltip>
             </Button>
           </Link>
         </div>

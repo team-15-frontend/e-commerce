@@ -30,23 +30,12 @@ export default function AdminUsers() {
   const [editUser, setEditUser] = useState(null)
   const [deleteUserId, setDeleteUserId] = useState(null)
 
-  const [searchParams] = useSearchParams()
   const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm({
     mode: 'onTouched',
   })
   const { search } = urlValues
 
-  const currentPage = searchParams.get('page') || 1
-  const limit = 15
-  const apiLimit = 480
-  const apiPage = Math.ceil((currentPage * limit) / apiLimit)
-  const localPageIndex = (currentPage - 1) % (apiLimit / limit)
-  const startIndex = localPageIndex * limit
-
-  const { data, isLoading, isError, error } = useGetAllUsers({
-    page: apiPage,
-    limit: apiLimit,
-  })
+  const { data, isLoading, isError, error } = useGetAllUsers()
   const users = data?.users || EMPTY_ARRAY
 
   const filteredUsers = useMemo(() => {
@@ -55,6 +44,10 @@ export default function AdminUsers() {
     ])
   }, [users, search])
 
+  const [searchParams] = useSearchParams()
+  const currentPage = searchParams.get('page') || 1
+  const limit = 15
+  const startIndex = (currentPage - 1) * limit
   const page = filteredUsers.slice(startIndex, startIndex + limit)
   const totalPages = Math.ceil(filteredUsers.length / limit)
 

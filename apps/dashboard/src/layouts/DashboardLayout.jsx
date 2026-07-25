@@ -8,6 +8,7 @@ import Sidebar from '@/components/Sidebar'
 import { useCurrentUser } from '@repo/api'
 import { LoadingSpinner } from '@repo/ui'
 import { cn } from '@repo/utils'
+import { toast } from '@repo/utils/toasts'
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false)
@@ -19,7 +20,10 @@ export default function DashboardLayout() {
   useEffect(() => {
     if (isLoading) return
     if (!user) return navigate('/login')
-    if (user.role !== 'admin') return navigate('/login')
+    if (user.role !== 'admin') {
+      navigate('/login')
+      toast.error('Not authorized!')
+    }
   }, [user, isLoading, navigate])
 
   return isLoading ? (

@@ -14,7 +14,6 @@ import { useSearchParamsForm } from '@repo/utils/forms'
 const EMPTY_ARRAY = []
 
 export default function Products() {
-  const [searchParams] = useSearchParams()
   const [filters, setFilters] = useState(false)
 
   const { register, handleSubmit, setValue, updateParams, urlValues } = useSearchParamsForm({
@@ -22,20 +21,15 @@ export default function Products() {
   })
   const { search, category, minprice, maxprice, sort } = urlValues
 
+  const [searchParams] = useSearchParams()
   const currentPage = searchParams.get('page') || 1
   const limit = 8
-  const apiLimit = 480
-  const apiPage = Math.ceil((currentPage * limit) / apiLimit)
-  const localPageIndex = (currentPage - 1) % (apiLimit / limit)
-  const startIndex = localPageIndex * limit
+  const startIndex = (currentPage - 1) * limit
 
   const { data, isLoading, isError, error } = useGetProducts({
-    page: apiPage,
-    limit: apiLimit,
+    limit: 500,
   })
   const products = data?.products || EMPTY_ARRAY
-
-  const categories = Array.from(new Set(products.map((p) => p.category).filter(Boolean)))
 
   const filteredProducts = useMemo(() => {
     return filterData(products, [
@@ -118,7 +112,7 @@ export default function Products() {
       )}
 
       <div className="flex items-start gap-4">
-        <FiltersForm className="max-lg:hidden" />
+        <FiltersForm form={form} className="max-lg:hidden" />
 
         <div className="flex-1">
           {isError ? (
@@ -127,7 +121,7 @@ export default function Products() {
             <Error message="No products found" />
           ) : (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              {Array.from({ length: isLoading ? limit : page?.length }).map((_, i) => {
+              {Array.from({ length: isLoading ? limit : page?.length  }).map((_, i) => {
                 const product = page?.[i]
 
                 return <ProductCard key={i} isLoading={isLoading} product={product} />
@@ -140,7 +134,7 @@ export default function Products() {
       <Pagination totalPages={totalPages} />
 
       <Dialog isOpen={filters} setIsOpen={setFilters} title="Filters" position="right">
-        <FiltersForm categories={categories} />
+        <FiltersForm form={form} />
       </Dialog>
     </div>
   )
