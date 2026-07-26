@@ -39,7 +39,7 @@ export default function Wishlist() {
                 'Loading your wishlist...'
               ) : (
                 <Badge>
-                  {data?.totalProducts} saved product{!(data?.totalProducts === 1) && 's'}
+                  {data?.totalProducts} saved product{data?.totalProducts === 1 ? '' : 's'}
                 </Badge>
               )}
             </p>
@@ -60,8 +60,7 @@ export default function Wishlist() {
       ) : !data?.totalProducts && !isLoading ? (
         <Error
           message="Your wishlist is empty"
-          description="
-          Save products you love and find them here anytime."
+          description="Save products you love and find them here anytime."
           link="/products"
           linkMessage="Browse Products"
         />

@@ -38,7 +38,7 @@ export default function Wishlist() {
                 'Loading your cart...'
               ) : (
                 <Badge>
-                  {cart?.itemCount} product{!(cart?.itemCount === 1) && 's'}
+                  {cart?.itemCount} product{cart?.itemCount === 1 ? '' : 's'}
                 </Badge>
               )}
             </p>

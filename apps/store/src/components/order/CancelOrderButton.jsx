@@ -17,14 +17,8 @@ export default function CancelOrderButton({ order }) {
       <>
         <div className="flex-center mt-4">
           <Button variant="outlineDanger" onClick={() => setCancel(true)} disabled={isPending}>
-            {isPending ? (
-              <LuLoaderCircle className="h-[1.5em] animate-spin" />
-            ) : (
-              <>
-                <FaTimesCircle />
-                Cancel Order
-              </>
-            )}
+            <FaTimesCircle />
+            Cancel Order
           </Button>
         </div>
 

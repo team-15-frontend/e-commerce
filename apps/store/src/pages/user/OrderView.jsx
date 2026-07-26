@@ -32,7 +32,7 @@ export default function DynamicOrder() {
             <p className="text-sm text-neutral-500">
               Order ID:{' '}
               <span className="text-accent-600 dark:text-accent-400 font-medium uppercase">
-                #{order._id.slice(-8)}
+                #{order?._id.slice(-8)}
               </span>
             </p>
           </div>
@@ -49,12 +49,12 @@ export default function DynamicOrder() {
         <Error message={error?.message} />
       ) : (
         <>
-          <OrderProgress status={order.status} />
+          <OrderProgress status={order?.status} />
 
-          <OrderItems items={order.items} />
+          <OrderItems items={order?.items} />
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <ShippingAddress address={order.shippingAddress} />
+            <ShippingAddress address={order?.shippingAddress} />
 
             <PaymentSummary order={order} />
           </div>
