@@ -102,7 +102,7 @@ export function Revenue({ className, isLoading, revenue }) {
       color="rose"
       header="revenue"
       icon={<LuDollarSign />}
-      value={revenue}
+      value={`$${revenue}`}
       description="Total gross revenue"
       className={className}
       isLoading={isLoading}
@@ -116,7 +116,7 @@ export function ThisMonth({ className, isLoading, salesThisMonth }) {
       color="sky"
       header="this month"
       icon={<LuCalendar />}
-      value={salesThisMonth && `$${salesThisMonth}`}
+      value={`$${salesThisMonth}`}
       description="All sales this month"
       className={className}
       isLoading={isLoading}

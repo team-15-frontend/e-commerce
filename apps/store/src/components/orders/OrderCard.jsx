@@ -13,31 +13,42 @@ const statusColors = {
 }
 
 export default function OrderCard({ isLoading, order }) {
-  console.log(order)
   return (
     <div className="card flex items-center justify-between p-4">
-      <div>
+      <div className="flex gap-2">
         {!isLoading ? (
-          <div className="flex-center gap-2">
-            <h2 className="font-medium uppercase">#{order?._id?.slice(-8)}</h2>
-
-            <Badge color={statusColors[order?.status]}>{order?.status}</Badge>
-          </div>
+          <img
+            src={order?.items[0].image}
+            alt={order?.items[0].name}
+            className="size-20 rounded-lg bg-neutral-300 object-cover"
+          />
         ) : (
-          <Skeleton width={164} />
+          <Skeleton width={80} height={80} />
         )}
 
-        <p className="text-sm text-neutral-500">
-          {!isLoading ? format(order?.createdAt, 'MMM d, yyyy') : <Skeleton width="50%" />}
-        </p>
-
-        <p className="text-sm text-neutral-600">
+        <div>
           {!isLoading ? (
-            `${order?.items.length} item${order?.items.length === 1 ? '' : 's'}`
+            <div className="flex-center gap-2">
+              <h2 className="font-medium uppercase">#{order?._id?.slice(-8)}</h2>
+
+              <Badge color={statusColors[order?.status]}>{order?.status}</Badge>
+            </div>
           ) : (
-            <Skeleton width="30%" />
+            <Skeleton width={164} />
           )}
-        </p>
+
+          <p className="text-sm text-neutral-500">
+            {!isLoading ? format(order?.createdAt, 'MMM d, yyyy') : <Skeleton width="50%" />}
+          </p>
+
+          <p className="text-sm text-neutral-600">
+            {!isLoading ? (
+              `${order?.items.length} item${order?.items.length === 1 ? '' : 's'}`
+            ) : (
+              <Skeleton width="30%" />
+            )}
+          </p>
+        </div>
       </div>
 
       <p className="flex-center gap-2 text-lg">

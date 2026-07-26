@@ -1,23 +1,13 @@
 import { useRef, useState } from 'react'
 
-import {
-  LuClipboardList,
-  LuHeart,
-  LuHouse,
-  LuList,
-  LuMoon,
-  LuPackage,
-  LuSearch,
-  LuShoppingCart,
-  LuSun,
-  LuUser,
-  LuX,
-} from 'react-icons/lu'
+import { LuHeart, LuMoon, LuSearch, LuShoppingCart, LuSun, LuUser, LuX } from 'react-icons/lu'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { useCurrentUser, useGetCart } from '@repo/api'
 import { Button, FormField, Tooltip } from '@repo/ui'
 import { cn, useTheme } from '@repo/utils'
+
+import Sidebar from './Sidebar'
 
 export default function Header() {
   const { theme, setTheme } = useTheme()
@@ -33,22 +23,22 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white shadow dark:bg-neutral-100 dark:shadow-none">
       <div className="container flex items-center justify-between gap-8 py-4">
-        <Link to="/" className="font-fancy pt-1 text-xl font-bold text-neutral-950 max-lg:hidden">
-          LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
-        </Link>
-
         <div className="flex-center gap-2">
+          <Sidebar />
+
+          <Link to="/" className="font-fancy pt-1 text-xl font-bold text-neutral-950 max-sm:hidden">
+            LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
+          </Link>
+        </div>
+
+        <div className="flex-center gap-2 max-lg:hidden">
           <Link to="/" className="text-inherit">
             <Button
               variant="ghost"
               size="sm"
-              className={cn('text-md max-sm:p-2', pathname === '/' && 'bg-neutral-200')}
+              className={cn('text-md', pathname === '/' && 'bg-neutral-200')}
             >
-              <span className="max-sm:hidden">Home</span>
-              <LuHouse className="sm:hidden" />
-              <Tooltip position="bottom" className="sm:hidden">
-                Home
-              </Tooltip>
+              Home
             </Button>
           </Link>
 
@@ -56,13 +46,9 @@ export default function Header() {
             <Button
               variant="ghost"
               size="sm"
-              className={cn('text-md max-sm:p-2', pathname === '/products' && 'bg-neutral-200')}
+              className={cn('text-md', pathname === '/products' && 'bg-neutral-200')}
             >
-              <span className="max-sm:hidden">Shop</span>
-              <LuPackage className="sm:hidden" />
-              <Tooltip position="bottom" className="sm:hidden">
-                Shop
-              </Tooltip>
+              Shop
             </Button>
           </Link>
 
@@ -70,13 +56,9 @@ export default function Header() {
             <Button
               variant="ghost"
               size="sm"
-              className={cn('text-md max-sm:p-2', pathname === '/orders' && 'bg-neutral-200')}
+              className={cn('text-md', pathname === '/orders' && 'bg-neutral-200')}
             >
-              <span className="max-sm:hidden">Orders</span>
-              <LuClipboardList className="sm:hidden" />
-              <Tooltip position="bottom" className="sm:hidden">
-                Orders
-              </Tooltip>
+              Orders
             </Button>
           </Link>
         </div>

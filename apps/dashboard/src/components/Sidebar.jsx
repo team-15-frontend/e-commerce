@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import {
   LuFileText,
   LuHouse,
@@ -14,47 +16,51 @@ import { useLogout } from '@repo/api'
 import { Button, Tooltip } from '@repo/ui'
 import { cn } from '@repo/utils'
 
-export default function Sidebar({ className, open, minimized }) {
+const sidebarData = [
+  {
+    title: 'Dashboard',
+    path: '/',
+    icon: <LuHouse />,
+  },
+  {
+    title: 'Users',
+    path: '/users',
+    icon: <LuUsers />,
+  },
+  {
+    title: 'Products',
+    path: '/products',
+    icon: <LuPackage />,
+  },
+  {
+    title: 'Add Product',
+    path: '/products/create',
+    icon: <LuPlus />,
+  },
+  {
+    title: 'Orders',
+    path: '/orders',
+    icon: <LuFileText />,
+  },
+  {
+    title: 'Carts',
+    path: '/carts',
+    icon: <LuShoppingCart />,
+  },
+  {
+    title: 'Settings',
+    path: '/settings',
+    icon: <LuSettings />,
+  },
+]
+
+export default function Sidebar({ className, open, setOpen, minimized }) {
   const { mutate: logout, isPending: logingout } = useLogout()
   const { pathname } = useLocation()
 
-  const sidebarData = [
-    {
-      title: 'Dashboard',
-      path: '/',
-      icon: <LuHouse />,
-    },
-    {
-      title: 'Users',
-      path: '/users',
-      icon: <LuUsers />,
-    },
-    {
-      title: 'Products',
-      path: '/products',
-      icon: <LuPackage />,
-    },
-    {
-      title: 'Add Product',
-      path: '/products/create',
-      icon: <LuPlus />,
-    },
-    {
-      title: 'Orders',
-      path: '/orders',
-      icon: <LuFileText />,
-    },
-    {
-      title: 'Carts',
-      path: '/carts',
-      icon: <LuShoppingCart />,
-    },
-    {
-      title: 'Settings',
-      path: '/settings',
-      icon: <LuSettings />,
-    },
-  ]
+  useEffect(() => {
+    setOpen(false)
+  }, [pathname])
 
   return (
     <aside
@@ -65,7 +71,7 @@ export default function Sidebar({ className, open, minimized }) {
       )}
     >
       {sidebarData.map((item) => (
-        <Link key={item.path} to={item.path} className="">
+        <Link key={item.path} to={item.path}>
           <Button
             variant={pathname === item.path ? 'primary' : 'ghost'}
             size={minimized ? 'lg-square' : 'lg'}
@@ -81,16 +87,18 @@ export default function Sidebar({ className, open, minimized }) {
           </Button>
         </Link>
       ))}
-      <div className="flex-1"></div>
+
       <Button
         onClick={() => logout()}
         disabled={logingout}
         variant="ghostDanger"
         size={minimized ? 'lg-square' : 'lg'}
-        className="justify-start"
+        className="mt-auto justify-start"
       >
         <LuLogOut />
-        <span className={cn('leading-none', minimized ? 'lg:hidden' : '')}>Logout</span>
+        <span className={cn('min-w-36 text-left leading-none', minimized ? 'lg:hidden' : '')}>
+          Logout
+        </span>
         <Tooltip position="right" className={cn('hidden', minimized ? 'lg:block' : '')}>
           Logout
         </Tooltip>

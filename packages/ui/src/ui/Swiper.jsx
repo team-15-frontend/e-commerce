@@ -89,7 +89,7 @@ export function Swiper({ children, className, isLoading, images, showImages, isC
       </div>
       {showImages && (
         <div className="flex w-full gap-4">
-          {Array.from({ length: isLoading ? 4 : images.length }).map((_, i) => {
+          {Array.from({ length: isLoading ? 4 : images?.length }).map((_, i) => {
             const image = images?.[i]
             const isSelected = activeIndex === i
 

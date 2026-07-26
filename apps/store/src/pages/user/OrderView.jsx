@@ -1,11 +1,11 @@
 import { LuArrowLeft } from 'react-icons/lu'
 import { Link, useParams } from 'react-router-dom'
 
-import CancelOrderButton from '@/components/order/CancelOrderButton'
-import OrderItems from '@/components/order/OrderItems'
-import OrderProgress from '@/components/order/OrderProgress'
-import PaymentSummary from '@/components/order/PaymentSummary'
-import ShippingAddress from '@/components/order/ShippingAddress'
+import CancelOrderButton from '@/components/orders/CancelOrderButton'
+import OrderItems from '@/components/orders/OrderItems'
+import OrderProgress from '@/components/orders/OrderProgress'
+import PaymentSummary from '@/components/orders/PaymentSummary'
+import ShippingAddress from '@/components/orders/ShippingAddress'
 
 import { useGetOrderById } from '@repo/api'
 import { Button, Error, LoadingSpinner } from '@repo/ui'

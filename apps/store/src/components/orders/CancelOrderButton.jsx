@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import { FaTimesCircle } from 'react-icons/fa'
-import { LuLoaderCircle } from 'react-icons/lu'
 
 import { useCancelOrder } from '@repo/api'
 import { Button, ConfirmDialog } from '@repo/ui'

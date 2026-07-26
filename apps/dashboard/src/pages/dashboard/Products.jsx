@@ -11,7 +11,7 @@ import {
   TotalProducts,
 } from '@/components/stats/DashboardStats'
 
-import { useGetProducts, useSearchProducts } from '@repo/api'
+import { useSearchProducts } from '@repo/api'
 import { Button, Error, FormField, Pagination } from '@repo/ui'
 import { cn, filterData } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'

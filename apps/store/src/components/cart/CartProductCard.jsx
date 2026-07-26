@@ -46,7 +46,7 @@ export default function CartProductCard({ isLoading, product }) {
         )}
 
         {!isLoading ? (
-          <div className="flex items-center gap-2">
+          <div className="flex gap-2">
             <Button
               variant="outline"
               size="md-square"
@@ -61,7 +61,7 @@ export default function CartProductCard({ isLoading, product }) {
               <LuMinus />
             </Button>
 
-            <span className="min-w-6 text-center font-semibold">{product?.quantity}</span>
+            <span className="self-center px-2 font-semibold">{product?.quantity}</span>
 
             <Button
               variant="outline"

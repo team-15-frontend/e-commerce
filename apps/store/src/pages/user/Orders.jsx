@@ -21,8 +21,6 @@ export default function Orders() {
   const orders = data?.orders || EMPTY_ARRAY
   const totalPages = data?.totalPages
 
-  console.log(data)
-
   return (
     <div className="flex flex-1 flex-col gap-4 py-8">
       <div className="card relative flex items-center justify-between gap-4 p-4">

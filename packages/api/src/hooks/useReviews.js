@@ -25,7 +25,7 @@ export const usePostReview = () => {
   return useMutation({
     mutationFn: ({ productId, data }) => reviewsService.create(productId, data),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: reviewsKeys.list(variables.id) })
+      queryClient.invalidateQueries({ queryKey: reviewsKeys.list(variables.productId) })
     },
   })
 }
@@ -36,7 +36,7 @@ export const useDeleteReview = () => {
   return useMutation({
     mutationFn: ({ productId, reviewId }) => reviewsService.remove(productId, reviewId),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: reviewsKeys.list(variables.id) })
+      queryClient.invalidateQueries({ queryKey: reviewsKeys.list(variables.productId) })
     },
   })
 }

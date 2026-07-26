@@ -9,20 +9,20 @@ import { useCurrentUser } from '@repo/api'
 import { cn } from '@repo/utils'
 import { toast } from '@repo/utils/toasts'
 
+const protectedRoutes = [
+  '/profile',
+  '/orders',
+  '/wishlist',
+  '/cart',
+  '/payment',
+  '/checkout',
+  '/order-success',
+]
+
 export default function MainLayout() {
   const { data: user, isLoading } = useCurrentUser()
   const { pathname } = useLocation()
   const navigate = useNavigate()
-
-  const protectedRoutes = [
-    '/profile',
-    '/orders',
-    '/wishlist',
-    '/cart',
-    '/payment',
-    '/checkout',
-    '/order-success',
-  ]
 
   useEffect(() => {
     protectedRoutes.forEach((route) => {

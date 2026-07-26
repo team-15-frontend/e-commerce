@@ -11,7 +11,7 @@ export default function ProductInfo({ isLoading, product }) {
         <h2 className="text-2xl font-medium sm:text-3xl">
           {!isLoading ? product.name : <Skeleton width="50%" />}
         </h2>
-        <p className="text-sm wrap-anywhere text-neutral-500">
+        <p className="wrap-anywhere text-neutral-500">
           {!isLoading ? (
             product.description
           ) : (
