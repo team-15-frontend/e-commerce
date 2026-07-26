@@ -1,5 +1,5 @@
 import { LuHeart, LuLoaderCircle, LuShoppingCart, LuStar, LuStarHalf } from 'react-icons/lu'
-import { Link } from 'react-router-dom'
+import { Link, Links } from 'react-router-dom'
 
 import { useAddToCart, useAddToWishlist, useGetWishlist, useRemoveFromWishlist } from '@repo/api'
 import { Badge, Button, Skeleton, Swiper } from '@repo/ui'
@@ -69,12 +69,10 @@ export default function ProductCard({ isLoading: isLoadingProduct, product }) {
         )}
       </Swiper>
 
-      <div className="flex flex-col gap-2 p-4">
-        <div>
+      <div className="flex flex-col gap-2">
+        <Link to={`/products/${product?._id}`} className="p-4 pb-0 text-inherit">
           <h2 className="mb-1 line-clamp-1 font-medium sm:text-lg">
-            <Link to={`/products/${product?._id || 0}`} className="text-inherit">
-              {!isLoading ? product.name : <Skeleton width="75%" />}
-            </Link>
+            {!isLoading ? product.name : <Skeleton width="75%" />}
           </h2>
 
           <div className="line-clamp-1 text-sm font-medium text-neutral-500">
@@ -85,7 +83,7 @@ export default function ProductCard({ isLoading: isLoadingProduct, product }) {
                 <LuStar />
                 <LuStar />
                 <LuStar />
-                <div className="text-accent-600 dark:text-accent-400 absolute top-0 left-0 flex gap-1 text-lg">
+                <div className="text-accent-600 dark:text-accent-400 absolute top-0 left-0 flex gap-1 text-lg group-hover:text-teal-600 group-hover:dark:text-teal-400">
                   {Array.from({ length: 5 }).map((_, i) => {
                     const rating = Math.round(product?.averageRating * 2) / 2 || 0
 
@@ -101,22 +99,22 @@ export default function ProductCard({ isLoading: isLoadingProduct, product }) {
               <Skeleton width="45%" />
             )}
           </div>
-        </div>
 
-        <p className="text-2xl font-bold">
-          {!isLoading ? (
-            <Link to={`/products/${product._id}`} className="text-inherit">
-              ${product.price}
-              {product?.discountPrice && (
-                <span className="ml-2 text-sm font-bold text-emerald-600 dark:text-emerald-400">
-                  {`-$${product.discountPrice} off`}
-                </span>
-              )}
-            </Link>
-          ) : (
-            <Skeleton width="50%" />
-          )}
-        </p>
+          <p className="mt-4 text-2xl font-bold">
+            {!isLoading ? (
+              <>
+                ${product.price}
+                {product?.discountPrice && (
+                  <span className="ml-2 text-sm font-bold text-emerald-600 dark:text-emerald-400">
+                    {`-$${product.discountPrice} off`}
+                  </span>
+                )}
+              </>
+            ) : (
+              <Skeleton width="50%" />
+            )}
+          </p>
+        </Link>
 
         {!isLoading ? (
           <Button
@@ -128,7 +126,7 @@ export default function ProductCard({ isLoading: isLoadingProduct, product }) {
                 quantity: 1,
               })
             }
-            className={cn('normal-case', isOutOfStock && 'pointer-events-none')}
+            className={cn('m-4 mt-0 normal-case', isOutOfStock && 'pointer-events-none')}
           >
             {addingToCart ? (
               <LuLoaderCircle className="h-[1.5em] animate-spin" />
