@@ -61,6 +61,15 @@ export default function Header() {
               Orders
             </Button>
           </Link>
+          <Link to="/sittings" className="text-inherit">
+            <Button
+              variant="ghost"
+              size="sm"
+              className={cn('text-md', pathname === '/orders' && 'bg-neutral-200')}
+            >
+              sittings
+            </Button>
+          </Link>
         </div>
 
         <div className="flex-center gap-2">
