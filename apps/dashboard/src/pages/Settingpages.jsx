@@ -1,16 +1,48 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { Sun, Moon } from "lucide-react";
 
-import { useTranslation } from "react-i18next";
-
 export default function SettingsPage() {
+  const [darkMode, setDarkMode] = useState(false);
 
-const [darkMode, setDarkMode] = useState(false);
+  useEffect(() => {
+    window.gtranslateSettings = {
+      default_language: "ar",
+      native_language_names: true,
+      languages: ["ar", "en", "fr", "de", "ko"],
+      wrapper_selector: ".gtranslate_wrapper",
+    };
 
-  const { t, i18n } = useTranslation();
-  const isArabic = i18n.language === "ar";
+    const script = document.createElement("script");
 
+    script.src = "https://cdn.gtranslate.net/widgets/latest/dropdown.js";
+
+    script.defer = true;
+
+    document.body.appendChild(script);
+
+    const waitForSelector = setInterval(() => {
+      const selector = document.querySelector(".gt_selector");
+
+      if (!selector) return;
+
+      clearInterval(waitForSelector);
+
+      const updateDirection = () => {
+        const isArabic = selector.value === "ar|ar";
+
+        document.documentElement.dir = isArabic ? "rtl" : "ltr";
+      };
+
+      updateDirection();
+
+      selector.addEventListener("change", updateDirection);
+    }, 300);
+
+    return () => {
+      clearInterval(waitForSelector);
+      document.body.removeChild(script);
+    };
+  }, []);
   const pageStyle = darkMode
     ? "min-h-screen bg-gradient-to-br from-slate-900 via-[#1e293b] to-blue-950 text-white transition-all duration-500"
     : "min-h-screen bg-gradient-to-br from-white via-blue-50 to-sky-100 text-slate-900 transition-all duration-500";
@@ -25,14 +57,8 @@ const [darkMode, setDarkMode] = useState(false);
 
   const labelStyle = darkMode ? "text-blue-100" : "text-blue-700";
 
-  const changeLanguage = (lang) => {
-    i18n.changeLanguage(lang);
-
-    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-  };
-
   return (
-    <div dir={isArabic ? "rtl" : "ltr"} className={pageStyle}>
+    <div className={pageStyle}>
       <div className="min-h-screen flex items-center justify-center p-4">
         <div
           className={`
@@ -48,17 +74,13 @@ const [darkMode, setDarkMode] = useState(false);
             ${cardStyle}
           `}
         >
-          {/* main */}
-
           <div className="flex justify-between items-center mb-8">
             <h1
-              className={`
-                text-3xl
-                font-bold
-                ${darkMode ? "text-blue-300" : "text-blue-700"}
-              `}
+              className={` text-3xl font-bold ${
+                darkMode ? "text-blue-300" : "text-blue-700"
+              }`}
             >
-              {t("title")}
+              الإعدادات
             </h1>
 
             <button
@@ -81,38 +103,35 @@ const [darkMode, setDarkMode] = useState(false);
           </div>
 
           {/* Language */}
-
           <div className="mb-6">
             <label className={`block mb-2 text-lg font-medium ${labelStyle}`}>
-              {t("language")}
+              اللغة
             </label>
 
-            <select
-              value={i18n.language}
-              onChange={(e) => changeLanguage(e.target.value)}
+            <div
               className={`
                 w-full
+
                 p-3
+
                 border
+
                 rounded-xl
-                outline-none
-                transition-all
-                ${inputStyle}
+
+                flex
+
+                items-center
+              ${inputStyle}
               `}
             >
-              <option value="ar">العربية</option>
-              <option value="en">English</option>             
-              <option value="de">Deutsch</option>
-              <option value="fr">Français</option>
-              <option value="ko">한국어</option>
-            </select>
+              <div className="gtranslate_wrapper flex-1 w-full"></div>
+            </div>
           </div>
 
-          {/* Theme selector */}
-
+          {/* Theme */}
           <div className="mb-8">
             <label className={`block mb-2 text-lg font-medium ${labelStyle}`}>
-              {t("theme")}
+              المظهر
             </label>
 
             <select
@@ -128,9 +147,8 @@ const [darkMode, setDarkMode] = useState(false);
                 ${inputStyle}
               `}
             >
-              <option value="light">{t("light")}</option>
-
-              <option value="dark">{t("dark")}</option>
+              <option value="light">فاتح</option>
+              <option value="dark">داكن</option>
             </select>
           </div>
         </div>
