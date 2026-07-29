@@ -9,6 +9,11 @@ import { ThemeProvider } from '@repo/utils'
 import { Toaster } from '@repo/utils/toasts'
 
 import '@/index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./i18n.js";
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
