@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-export function ClonedGTranslate({ className }) {
+export function ClonedGTranslate() {
   const containerRef = useRef(null)
 
   useEffect(() => {
@@ -39,9 +39,5 @@ export function ClonedGTranslate({ className }) {
     return () => clearInterval(waitForOriginal)
   }, [])
 
-  return (
-    <div ref={containerRef} className={className}>
-      Loading translator...
-    </div>
-  )
+  return <div ref={containerRef}>Loading translator...</div>
 }
