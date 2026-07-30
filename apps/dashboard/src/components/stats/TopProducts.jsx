@@ -14,7 +14,7 @@ export default function TopProducts({ className, isLoading, topProducts }) {
         <Badge>{topProducts?.length || 0} products</Badge>
       </div>
 
-      <div className="flex max-h-128 flex-col gap-4 overflow-y-auto">
+      <div className="mt-auto flex max-h-128 flex-col gap-4 overflow-y-auto">
         {Array.from({ length: isLoading ? 5 : topProducts?.length }).map((_, i) => {
           const product = topProducts?.[i]
 

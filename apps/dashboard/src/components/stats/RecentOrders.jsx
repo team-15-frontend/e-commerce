@@ -14,7 +14,7 @@ export default function RecentOrders({ className, isLoading, recentOrders }) {
         <Badge>{recentOrders?.length || 0} orders</Badge>
       </div>
 
-      <div className="flex max-h-128 flex-col gap-4 overflow-y-auto">
+      <div className="mt-auto flex max-h-128 flex-col gap-4 overflow-y-auto">
         {Array.from({ length: isLoading ? 5 : recentOrders?.length }).map((_, i) => {
           const order = recentOrders?.[i]
 
@@ -33,7 +33,7 @@ export default function RecentOrders({ className, isLoading, recentOrders }) {
                 </p>
               </div>
 
-              <div className="flex-1 space-x-2 self-center text-end">
+              <div className="flex flex-1 justify-end space-x-2 self-center">
                 {!isLoading ? (
                   <>
                     <Badge
