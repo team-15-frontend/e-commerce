@@ -36,7 +36,7 @@ export default function Header() {
         <div className="flex-center gap-2">
           <Sidebar />
 
-          <Link to="/" className="font-fancy pt-1 text-xl font-bold text-neutral-950 max-sm:hidden">
+          <Link to="/" className="font-fancy pt-1 text-xl font-bold text-neutral-950 max-lg:hidden">
             LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
           </Link>
         </div>
