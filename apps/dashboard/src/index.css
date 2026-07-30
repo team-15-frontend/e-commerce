@@ -1,5 +1,1 @@
 @import '@repo/tailwind-config';
-
-.gtranslate_wrapper select.gt_selector {
-  @apply accent-accent-600 dark:accent-accent-600 w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2.5 capitalize outline-none placeholder:text-neutral-500 dark:bg-neutral-200;
-}

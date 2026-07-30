@@ -9,6 +9,7 @@ import AdminProductCreate from '@/pages/dashboard/ProductCreate'
 import AdminProductEdit from '@/pages/dashboard/ProductEdit'
 import AdminProducts from '@/pages/dashboard/Products'
 import AdminProductView from '@/pages/dashboard/ProductView'
+import AdminSettings from '@/pages/dashboard/Settings'
 import AdminUsers from '@/pages/dashboard/Users'
 import NotFound from '@/pages/NotFound'
 
@@ -32,7 +33,7 @@ export default function DashboardRoutes() {
 
           <Route path="/carts" element={<AdminCarts />} />
 
-          <Route path="/settings" element={<div />} />
+          <Route path="/settings" element={<AdminSettings />} />
 
           <Route path="*" element={<NotFound />} />
         </Route>

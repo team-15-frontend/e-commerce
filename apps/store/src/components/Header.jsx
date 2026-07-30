@@ -1,16 +1,26 @@
 import { useRef, useState } from 'react'
 
-import { LuHeart, LuMoon, LuSearch, LuShoppingCart, LuSun, LuUser, LuX } from 'react-icons/lu'
+import {
+  LuGlobe,
+  LuHeart,
+  LuMoon,
+  LuSearch,
+  LuShoppingCart,
+  LuSun,
+  LuUser,
+  LuX,
+} from 'react-icons/lu'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { useCurrentUser, useGetCart } from '@repo/api'
-import { Button, FormField, Tooltip } from '@repo/ui'
+import { Button, ClonedGTranslate, FormField, Tooltip } from '@repo/ui'
 import { cn, useTheme } from '@repo/utils'
 
 import Sidebar from './Sidebar'
 
 export default function Header() {
   const { theme, setTheme } = useTheme()
+  const [language, setLanguage] = useState(false)
   const [search, setSearch] = useState(false)
   const searchRef = useRef(null)
   const navigate = useNavigate()
@@ -70,14 +80,16 @@ export default function Header() {
               search && 'grid-cols-[1fr_auto] gap-2',
             )}
           >
-            <div className="overflow-hidden">
+            <div
+              className={cn(
+                'max-w-32 overflow-hidden opacity-0 transition-all',
+                search && 'opacity-100',
+              )}
+            >
               <FormField
                 ref={searchRef}
                 placeholder="search..."
-                className={cn(
-                  'w-full py-1 text-sm opacity-0 transition-all',
-                  search && 'opacity-100',
-                )}
+                className="w-full py-1 text-sm"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     e.preventDefault()
@@ -133,6 +145,39 @@ export default function Header() {
               )}
             </Button>
           </Link>
+
+          <div
+            className={cn(
+              'grid grid-cols-[0fr_auto] items-center justify-end gap-0 transition-all max-sm:hidden',
+              language && 'grid-cols-[1fr_auto] gap-2',
+            )}
+          >
+            <div
+              className={cn(
+                'small-translate max-w-32 overflow-hidden opacity-0 transition-all',
+                language && 'opacity-100',
+              )}
+            >
+              <ClonedGTranslate />
+            </div>
+
+            <Button
+              variant="ghost"
+              size="md-square"
+              onClick={() => {
+                setLanguage(!language)
+              }}
+            >
+              {language ? (
+                <LuX />
+              ) : (
+                <>
+                  <LuGlobe />
+                  <Tooltip position="bottom">Language</Tooltip>
+                </>
+              )}
+            </Button>
+          </div>
 
           <Button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}

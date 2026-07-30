@@ -27,7 +27,10 @@ export function FormField({
       {label && (
         <label
           htmlFor={id}
-          className="flex-center w-fit cursor-pointer gap-1 text-sm font-medium text-neutral-600 capitalize"
+          className={cn(
+            'flex-center w-fit gap-1 text-sm font-medium text-neutral-600 capitalize',
+            type !== 'select' && 'cursor-pointer',
+          )}
         >
           {labelIcon} {label}
         </label>

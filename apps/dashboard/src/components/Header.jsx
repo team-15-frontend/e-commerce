@@ -1,5 +1,8 @@
+import { useState } from 'react'
+
 import {
   LuBell,
+  LuGlobe,
   LuIndentDecrease,
   LuIndentIncrease,
   LuMenu,
@@ -10,10 +13,11 @@ import {
 import { Link } from 'react-router-dom'
 
 import { useCurrentUser } from '@repo/api'
-import { Button, Tooltip } from '@repo/ui'
+import { Button, ClonedGTranslate, Tooltip } from '@repo/ui'
 import { cn, useTheme } from '@repo/utils'
 
 export default function Navbar({ className, open, setOpen, minimized, setMinimized }) {
+  const [language, setLanguage] = useState(false)
   const { theme, setTheme } = useTheme()
   const { data: user, isLoading } = useCurrentUser()
 
@@ -49,6 +53,39 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
       </div>
 
       <div className="flex-center gap-2">
+        <div
+          className={cn(
+            'grid grid-cols-[0fr_auto] items-center justify-end gap-0 transition-all max-sm:hidden',
+            language && 'grid-cols-[1fr_auto] gap-2',
+          )}
+        >
+          <div
+            className={cn(
+              'small-translate max-w-32 overflow-hidden opacity-0 transition-all',
+              language && 'opacity-100',
+            )}
+          >
+            <ClonedGTranslate />
+          </div>
+
+          <Button
+            variant="ghost"
+            size="md-square"
+            onClick={() => {
+              setLanguage(!language)
+            }}
+          >
+            {language ? (
+              <LuX />
+            ) : (
+              <>
+                <LuGlobe />
+                <Tooltip position="bottom">Language</Tooltip>
+              </>
+            )}
+          </Button>
+        </div>
+
         <Button
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
           variant="ghost"

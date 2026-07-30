@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
 
+const SCRIPT_ID = 'gtranslate_script'
 let gtranslateLoadPromise = null
 
-function loadGtranslateOnce() {
+export function loadGtranslateOnce() {
   if (gtranslateLoadPromise) return gtranslateLoadPromise
 
   gtranslateLoadPromise = new Promise((resolve, reject) => {
@@ -13,7 +14,7 @@ function loadGtranslateOnce() {
       wrapper_selector: '.gtranslate_wrapper',
     }
     const script = document.createElement('script')
-    script.id = 'gtranslate_script'
+    script.id = SCRIPT_ID
     script.src = 'https://cdn.gtranslate.net/widgets/latest/dropdown.js'
     script.defer = true
     script.onload = () => resolve()
@@ -36,14 +37,17 @@ export function useGTranslate() {
       waitForSelector = setInterval(() => {
         const found = document.querySelector('.gt_selector')
         if (!found) return
+
         clearInterval(waitForSelector)
         selector = found
+
         updateDirection = () => {
           const val = selector.value || ''
           const isArabic = val === 'ar' || val.endsWith('ar') || val === 'ar|ar'
           document.documentElement.dir = isArabic ? 'rtl' : 'ltr'
           document.documentElement.lang = isArabic ? 'ar' : 'en'
         }
+
         setTimeout(updateDirection, 100)
         selector.addEventListener('change', updateDirection)
       }, 300)
