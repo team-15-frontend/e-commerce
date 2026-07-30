@@ -58,13 +58,20 @@ export function FormField({
               </option>
             )}
             {options?.map((option, i) => {
-              const capitalizedOption = String(option).replace(/\b\w/g, (char) =>
-                char.toUpperCase(),
-              )
+              let label, value
+              if (typeof option === 'string') {
+                label = String(option).replace(/\b\w/g, (char) => char.toUpperCase())
+
+                value = String(option).trim().toLowerCase()
+              } else {
+                label = option.label
+
+                value = option.value
+              }
 
               return (
-                <option key={i} value={String(option).trim().toLowerCase()} className="capitalize">
-                  {capitalizedOption}
+                <option key={i} value={value} className="capitalize">
+                  {label}
                 </option>
               )
             })}

@@ -32,8 +32,6 @@ export default function ProductReviews({ product, reviews }) {
     })
   }
 
-  console.log(reviews)
-
   return (
     <div className="flex flex-col gap-4">
       <form
@@ -90,8 +88,8 @@ export default function ProductReviews({ product, reviews }) {
         </Button>
       </form>
 
-      {reviews.map((review) => (
-        <div className="card flex gap-4 p-4 shadow-xs">
+      {reviews.map((review, i) => (
+        <div key={i} className="card flex gap-4 p-4 shadow-xs">
           <img
             src={review?.user.avatar}
             alt={review?.user.username}

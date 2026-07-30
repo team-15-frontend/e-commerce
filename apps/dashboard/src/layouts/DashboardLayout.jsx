@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import Header from '@/components/Header'
 import Sidebar from '@/components/Sidebar'
+import AdminSettings from '@/pages/dashboard/Settings'
 
 import { useCurrentUser } from '@repo/api'
 import { LoadingSpinner } from '@repo/ui'
@@ -16,6 +17,8 @@ export default function DashboardLayout() {
 
   const { data: user, isLoading } = useCurrentUser()
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const isSettingsPage = pathname.startsWith('/settings')
 
   useEffect(() => {
     if (isLoading) return
@@ -58,6 +61,8 @@ export default function DashboardLayout() {
       <main className="col-start-1 col-end-3 row-start-2 row-end-3 overflow-y-scroll lg:col-start-2">
         <div className="container flex min-h-full flex-col py-6">
           <Outlet />
+
+          <AdminSettings className={isSettingsPage ? '' : 'hidden'} />
         </div>
       </main>
     </div>

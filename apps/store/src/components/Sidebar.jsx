@@ -33,7 +33,7 @@ export default function Sidebar() {
 
   useEffect(() => {
     setOpen(false)
-  }, [pathname])
+  }, [setOpen, pathname])
 
   return (
     <>
@@ -63,7 +63,7 @@ export default function Sidebar() {
               className="w-full justify-start"
             >
               {item.icon}
-              <span className="min-w-36 text-left leading-none">{item.title}</span>
+              <span className="flex min-w-36 justify-start leading-none">{item.title}</span>
             </Button>
           </Link>
         ))}
@@ -76,7 +76,7 @@ export default function Sidebar() {
           className="mt-auto justify-start"
         >
           <LuLogOut />
-          <span className="min-w-36 text-left leading-none">Logout</span>
+          <span className="flex min-w-36 justify-start leading-none">Logout</span>
         </Button>
       </aside>
     </>

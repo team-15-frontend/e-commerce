@@ -60,7 +60,7 @@ export default function Sidebar({ className, open, setOpen, minimized }) {
 
   useEffect(() => {
     setOpen(false)
-  }, [pathname])
+  }, [setOpen, pathname])
 
   return (
     <aside
@@ -78,7 +78,12 @@ export default function Sidebar({ className, open, setOpen, minimized }) {
             className="w-full justify-start"
           >
             {item.icon}
-            <span className={cn('min-w-36 text-left leading-none', minimized ? 'lg:hidden' : '')}>
+            <span
+              className={cn(
+                'flex min-w-36 justify-start leading-none',
+                minimized ? 'lg:hidden' : '',
+              )}
+            >
               {item.title}
             </span>
             <Tooltip position="right" className={cn('hidden', minimized ? 'lg:block' : '')}>
@@ -96,7 +101,9 @@ export default function Sidebar({ className, open, setOpen, minimized }) {
         className="mt-auto justify-start"
       >
         <LuLogOut />
-        <span className={cn('min-w-36 text-left leading-none', minimized ? 'lg:hidden' : '')}>
+        <span
+          className={cn('flex min-w-36 justify-start leading-none', minimized ? 'lg:hidden' : '')}
+        >
           Logout
         </span>
         <Tooltip position="right" className={cn('hidden', minimized ? 'lg:block' : '')}>

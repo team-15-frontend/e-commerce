@@ -15,8 +15,8 @@ export function Table({
         <thead className="bg-neutral-50 text-nowrap dark:bg-neutral-200">
           <tr>
             {columns.map((column, i) => (
-              <th key={i} className="px-4 py-3 text-left font-medium capitalize">
-                {column}
+              <th key={i} className="px-4 py-3 font-medium capitalize">
+                <span className="flex justify-start">{column}</span>
               </th>
             ))}
           </tr>
