@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import AddressForm from '@/components/profile/AddressForm'
 import ProfileInfo from '@/components/profile/ProfileInfo'
 import SecurityForm from '@/components/profile/SecurityForm'
-import AdminSettings from '@/components/profile/Settings'
+import Settings from '@/components/profile/Settings'
 
 import { useCurrentUser, useLogout } from '@repo/api'
 import { Button, Error, LoadingSpinner } from '@repo/ui'
@@ -47,7 +47,7 @@ export default function Profile() {
 
           <SecurityForm />
 
-          <AdminSettings />
+          <Settings />
 
           <div className="card flex flex-col items-start gap-4 p-4">
             <h2 className="text-xl font-bold">Account</h2>
