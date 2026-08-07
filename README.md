@@ -1,159 +1,155 @@
-# Turborepo starter
+# E-Commerce Monorepo
 
-This Turborepo starter is maintained by the Turborepo core team.
+Monorepo containing a React-based storefront and admin dashboard with shared component and utility packages.
 
-## Using this example
+Key workspaces
 
-Run the following command:
+- apps/store — customer-facing storefront (Vite + React)
+- apps/dashboard — admin dashboard for store management (Vite + React)
+- packages/ui — shared React UI components
+- packages/api — client helpers (axios/react-query) for API requests
+- packages/utils — shared utilities
+- packages/tailwind-config — Tailwind config used by apps
 
-```sh
-npx create-turbo@latest
-```
+Why this project
 
-## What's inside?
+Provides a full example of a modern e-commerce frontend split into a storefront and admin UI, sharing components and tooling via npm workspaces and Turbo (turbo).
 
-This Turborepo includes the following packages/apps:
+Quick start
 
-### Apps and Packages
+Prerequisites
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- Node.js >= 18
+- npm (project uses npm workspaces; dev metadata indicates npm 11.16+)
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+Install dependencies (root)
 
 ```sh
-cd my-turborepo
-turbo build
+npm install
 ```
 
-Without global `turbo`, use your package manager:
+Run all apps in development (uses Turborepo tasks defined in root package.json)
 
 ```sh
-cd my-turborepo
-npx turbo build
-npm dlx turbo build
-npm exec turbo build
+npm run dev
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+Run a single workspace (example: storefront)
 
 ```sh
-turbo build --filter=docs
+npm run dev --workspace=store
+# or, for dashboard
+npm run dev --workspace=dashboard
 ```
 
-Without global `turbo`:
+Build (all workspaces)
 
 ```sh
-npx turbo build --filter=docs
-npm exec turbo build --filter=docs
-npm exec turbo build --filter=docs
+npm run build
 ```
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+Preview a built app
 
 ```sh
-cd my-turborepo
-turbo dev
+# build first, then preview a specific workspace
+npm run build
+npm run preview --workspace=store
 ```
 
-Without global `turbo`, use your package manager:
+Project scripts
+
+- npm run dev — runs turbo dev to start all dev servers
+- npm run build — runs turbo build to build all packages
+- npm run lint — runs turbo lint (packages/apps use oxlint)
+- npm run format — runs Prettier across the repo
+
+Environment variables
+
+Each app includes an .env.example (apps/store/.env.example, apps/dashboard/.env.example). Copy into .env and fill values before running (for example, Stripe keys or API endpoints used by the storefront).
+
+Testing & linting
+
+- Tests: each app uses Vitest (npm run test inside workspace)
+- Linting: oxlint is used in apps (npm run lint inside workspace)
+
+Workspace-level usage examples
+
+- Install a new dependency in the store app:
 
 ```sh
-cd my-turborepo
-npx turbo dev
-npm exec turbo dev
-npm exec turbo dev
+npm install axios --workspace=store
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+- Run tests for a package:
 
 ```sh
-turbo dev --filter=web
+npm run test --workspace=store
 ```
 
-Without global `turbo`:
+Notes about third-party services
 
-```sh
-npx turbo dev --filter=web
-npm exec turbo dev --filter=web
-npm exec turbo dev --filter=web
+The storefront integrates with Stripe (see package.json deps). Provide appropriate publishable keys and backend endpoints via environment variables when testing payments locally.
+
+Contributing
+
+Project currently does not include a CONTRIBUTING.md. Please open issues or PRs in this repository for bugs and features. When contributing:
+
+- Fork the repo and create a branch with a clear name
+- Keep changes scoped to one logical change
+- Run tests and lint locally before opening a PR
+
+Where to get help
+
+- Use this repository's Issues for bug reports and feature requests
+- Open a discussion or PR for design or architectural proposals
+
+Maintainers
+
+Maintained by the team-9-frontend/e-commerce repository maintainers. If you are a maintainer, add maintainer contact details or a CONTRIBUTING.md file.
+
+Repository layout (top-level)
+
+- apps/
+  - store/
+  - dashboard/
+- packages/
+  - ui/
+  - api/
+  - utils/
+  - tailwind-config/
+- package.json — root scripts and turborepo workspace config
+
+Relevant files
+
+- apps/store/package.json — storefront app scripts and deps
+- apps/dashboard/package.json — dashboard app scripts and deps
+- packages/ui — shared UI components
+- packages/api — API helpers used by both apps
+
+License
+
+See the LICENSE file at the repository root if present. If no LICENSE exists, add one before reusing this code publicly.
+
+Small examples
+
+Importing the shared UI package from an app:
+
+```js
+import { Button } from '@repo/ui'
 ```
 
-### Remote Caching
+Using API helpers (packages/api):
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+```js
+import { apiClient } from '@repo/api'
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
+apiClient.get('/products').then((res) => console.log(res.data))
 ```
 
-Without global `turbo`, use your package manager:
+Maintainer checklist (suggested)
 
-```sh
-cd my-turborepo
-npx turbo login
-npm exec turbo login
-npm exec turbo login
-```
+- Add a CONTRIBUTING.md with contribution rules
+- Add CI (GitHub Actions) build badge to this README
+- Add LICENSE if the project should be open source
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-npm exec turbo link
-npm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+If anything in this README is out of date, please open an issue or PR with corrections.
