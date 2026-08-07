@@ -1,155 +1,309 @@
-# E-Commerce Monorepo
+# 🛒 E-Commerce Monorepo
 
-Monorepo containing a React-based storefront and admin dashboard with shared component and utility packages.
+A modern **React-based e-commerce frontend** built with **Turborepo** and **npm Workspaces**, featuring a customer storefront and an admin dashboard that share reusable UI components, API utilities, and development tooling.
 
-Key workspaces
+Designed to demonstrate scalable frontend architecture, code sharing, and modern React development practices.
 
-- apps/store — customer-facing storefront (Vite + React)
-- apps/dashboard — admin dashboard for store management (Vite + React)
-- packages/ui — shared React UI components
-- packages/api — client helpers (axios/react-query) for API requests
-- packages/utils — shared utilities
-- packages/tailwind-config — Tailwind config used by apps
+---
 
-Why this project
+## 📸 Preview
 
-Provides a full example of a modern e-commerce frontend split into a storefront and admin UI, sharing components and tooling via npm workspaces and Turbo (turbo).
+> Add screenshots or GIFs of your applications here.
 
-Quick start
+### Storefront
 
-Prerequisites
+![Storefront](docs/images/storefront.png)
 
-- Node.js >= 18
-- npm (project uses npm workspaces; dev metadata indicates npm 11.16+)
+### Admin Dashboard
 
-Install dependencies (root)
+![Dashboard](docs/images/dashboard.png)
 
-```sh
+---
+
+## ✨ Features
+
+### Storefront
+
+- 🛍 Browse products
+- 🔍 Search and filter products
+- 🛒 Shopping cart
+- 💳 Stripe checkout integration
+- 👤 User authentication
+- ❤️ Wishlist _(if implemented)_
+- 📱 Responsive design
+
+### Admin Dashboard
+
+- 📦 Product management
+- 📝 Category management
+- 📊 Dashboard analytics
+- 📦 Order management
+- 👥 User management _(if implemented)_
+
+### Shared Packages
+
+- Reusable UI component library
+- Shared API client
+- Shared utility functions
+- Shared Tailwind configuration
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+
+- React 19
+- Vite
+- React Router
+- Tailwind CSS v4
+
+### State & Data Fetching
+
+- TanStack Query
+- Axios
+
+### Forms & UI
+
+- React Hook Form
+- Headless UI
+- React Icons
+- React Toastify
+- Recharts
+- Swiper
+
+### Payments
+
+- Stripe
+
+### Tooling
+
+- Turborepo
+- npm Workspaces
+- Oxlint
+- Prettier
+- Vitest
+
+---
+
+## 📁 Project Structure
+
+```text
+.
+├── apps
+│   ├── store
+│   │   ├── src
+│   │   └── package.json
+│   │
+│   └── dashboard
+│       ├── src
+│       └── package.json
+│
+├── packages
+│   ├── api
+│   ├── ui
+│   ├── utils
+│   └── tailwind-config
+│
+├── package.json
+├── turbo.json
+└── README.md
+```
+
+---
+
+## 📦 Workspace Packages
+
+| Package                      | Description                                               |
+| ---------------------------- | --------------------------------------------------------- |
+| **packages/ui**              | Shared React UI components used by both applications.     |
+| **packages/api**             | Axios client, API helpers, and React Query configuration. |
+| **packages/utils**           | Shared utility functions and helpers.                     |
+| **packages/tailwind-config** | Shared Tailwind CSS configuration and theme.              |
+
+---
+
+## 🏗 Architecture
+
+```text
+                    Monorepo
+                       │
+        ┌──────────────┴──────────────┐
+        │                             │
+   apps/store                 apps/dashboard
+        │                             │
+        └──────────────┬──────────────┘
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+       ui             api           utils
+                       │
+               tailwind-config
+```
+
+---
+
+# 🚀 Getting Started
+
+## Prerequisites
+
+- Node.js 18+
+- npm
+
+---
+
+## Clone the repository
+
+```bash
+git clone https://github.com/your-username/e-commerce-monorepo.git
+
+cd e-commerce-monorepo
+```
+
+---
+
+## Install dependencies
+
+```bash
 npm install
 ```
 
-Run all apps in development (uses Turborepo tasks defined in root package.json)
+---
 
-```sh
+## Configure environment variables
+
+Copy the example environment files.
+
+```bash
+cp apps/store/.env.example apps/store/.env
+
+cp apps/dashboard/.env.example apps/dashboard/.env
+```
+
+Fill in the required values such as:
+
+- API URL
+- Stripe Publishable Key
+- Any authentication credentials
+
+---
+
+## Start development
+
+Run every application simultaneously.
+
+```bash
 npm run dev
 ```
 
-Run a single workspace (example: storefront)
+Or run a single workspace.
 
-```sh
+```bash
 npm run dev --workspace=store
-# or, for dashboard
+
 npm run dev --workspace=dashboard
 ```
 
-Build (all workspaces)
+---
 
-```sh
+## Build
+
+```bash
 npm run build
 ```
 
-Preview a built app
+---
 
-```sh
-# build first, then preview a specific workspace
-npm run build
+## Preview
+
+```bash
 npm run preview --workspace=store
+
+npm run preview --workspace=dashboard
 ```
 
-Project scripts
+---
 
-- npm run dev — runs turbo dev to start all dev servers
-- npm run build — runs turbo build to build all packages
-- npm run lint — runs turbo lint (packages/apps use oxlint)
-- npm run format — runs Prettier across the repo
+# 📜 Available Scripts
 
-Environment variables
+| Command          | Description                                |
+| ---------------- | ------------------------------------------ |
+| `npm run dev`    | Start all applications in development mode |
+| `npm run build`  | Build every workspace                      |
+| `npm run lint`   | Run Oxlint across the monorepo             |
+| `npm run format` | Format the repository with Prettier        |
 
-Each app includes an .env.example (apps/store/.env.example, apps/dashboard/.env.example). Copy into .env and fill values before running (for example, Stripe keys or API endpoints used by the storefront).
+---
 
-Testing & linting
+# 📦 Installing Dependencies
 
-- Tests: each app uses Vitest (npm run test inside workspace)
-- Linting: oxlint is used in apps (npm run lint inside workspace)
+Install a dependency into a specific workspace.
 
-Workspace-level usage examples
-
-- Install a new dependency in the store app:
-
-```sh
+```bash
 npm install axios --workspace=store
 ```
 
-- Run tests for a package:
-
-```sh
-npm run test --workspace=store
-```
-
-Notes about third-party services
-
-The storefront integrates with Stripe (see package.json deps). Provide appropriate publishable keys and backend endpoints via environment variables when testing payments locally.
-
-Contributing
-
-Project currently does not include a CONTRIBUTING.md. Please open issues or PRs in this repository for bugs and features. When contributing:
-
-- Fork the repo and create a branch with a clear name
-- Keep changes scoped to one logical change
-- Run tests and lint locally before opening a PR
-
-Where to get help
-
-- Use this repository's Issues for bug reports and feature requests
-- Open a discussion or PR for design or architectural proposals
-
-Maintainers
-
-Maintained by the team-9-frontend/e-commerce repository maintainers. If you are a maintainer, add maintainer contact details or a CONTRIBUTING.md file.
-
-Repository layout (top-level)
-
-- apps/
-  - store/
-  - dashboard/
-- packages/
-  - ui/
-  - api/
-  - utils/
-  - tailwind-config/
-- package.json — root scripts and turborepo workspace config
-
-Relevant files
-
-- apps/store/package.json — storefront app scripts and deps
-- apps/dashboard/package.json — dashboard app scripts and deps
-- packages/ui — shared UI components
-- packages/api — API helpers used by both apps
-
-License
-
-See the LICENSE file at the repository root if present. If no LICENSE exists, add one before reusing this code publicly.
-
-Small examples
-
-Importing the shared UI package from an app:
+Example imports.
 
 ```js
 import { Button } from '@repo/ui'
 ```
 
-Using API helpers (packages/api):
-
 ```js
 import { apiClient } from '@repo/api'
 
-apiClient.get('/products').then((res) => console.log(res.data))
+apiClient.get('/products')
 ```
 
-Maintainer checklist (suggested)
+---
 
-- Add a CONTRIBUTING.md with contribution rules
-- Add CI (GitHub Actions) build badge to this README
-- Add LICENSE if the project should be open source
+# 💳 Stripe
 
-If anything in this README is out of date, please open an issue or PR with corrections.
+The storefront integrates with Stripe for payment processing.
+
+To test payments locally, configure your environment variables with your Stripe publishable key and backend API endpoints.
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome!
+
+If you'd like to contribute:
+
+1. Fork the repository
+2. Create a feature branch
+
+```bash
+git checkout -b feature/amazing-feature
+```
+
+3. Commit your changes
+
+```bash
+git commit -m "Add amazing feature"
+```
+
+4. Push to your branch
+
+```bash
+git push origin feature/amazing-feature
+```
+
+5. Open a Pull Request
+
+Please ensure the project builds successfully and passes linting before submitting a PR.
+
+---
+
+# 📄 License
+
+This project is licensed under the MIT License.
+
+See the LICENSE file for more information.
+
+---
+
+## ⭐ Support
+
+If you found this project useful, consider giving it a ⭐ on GitHub.
