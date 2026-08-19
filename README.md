@@ -10,7 +10,7 @@ Designed to demonstrate scalable frontend architecture, code sharing, and modern
 
 ### 🎥 Demo Video
 
-<video src="https://raw.githubusercontent.com/team-9-frontend/e-commerce/refs/heads/main/docs/videos/e-commerce-compressed.mp4?raw=true" controls width="100%"></video>
+<video src="./docs/videos/e-commerce-compressed.mp4" controls width="100%"></video>
 
 ---
 
