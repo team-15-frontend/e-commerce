@@ -8,15 +8,9 @@ Designed to demonstrate scalable frontend architecture, code sharing, and modern
 
 ## 📸 Preview
 
-> Add screenshots or GIFs of your applications here.
+### 🎥 Demo Video
 
-### Storefront
-
-![Storefront](docs/images/storefront.png)
-
-### Admin Dashboard
-
-![Dashboard](docs/images/dashboard.png)
+<video src="docs/videos/e-commerce-compressed.mp4" controls width="100%"></video>
 
 ---
 
@@ -29,7 +23,7 @@ Designed to demonstrate scalable frontend architecture, code sharing, and modern
 - 🛒 Shopping cart
 - 💳 Stripe checkout integration
 - 👤 User authentication
-- ❤️ Wishlist _(if implemented)_
+- ❤️ Wishlist
 - 📱 Responsive design
 
 ### Admin Dashboard
@@ -38,7 +32,7 @@ Designed to demonstrate scalable frontend architecture, code sharing, and modern
 - 📝 Category management
 - 📊 Dashboard analytics
 - 📦 Order management
-- 👥 User management _(if implemented)_
+- 👥 User management
 
 ### Shared Packages
 
