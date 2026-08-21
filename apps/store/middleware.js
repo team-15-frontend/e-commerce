@@ -12,10 +12,11 @@ export default async function middleware(request) {
 
   const headers = new Headers(request.headers)
   headers.set('host', targetUrl.host)
+  const reqBody = ['GET', 'HEAD'].includes(request.method) ? null : await request.text()
 
   return fetch(targetUrl, {
     method: request.method,
     headers: headers,
-    body: ['GET', 'HEAD'].includes(request.method) ? null : request.body,
+    body: reqBody,
   })
 }
