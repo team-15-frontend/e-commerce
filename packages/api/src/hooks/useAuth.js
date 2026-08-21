@@ -35,7 +35,6 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: authService.login,
     onSuccess: (data) => {
-      localStorage.setItem('token', data.token)
       queryClient.invalidateQueries({ queryKey: authKeys.currentUser })
     },
   })
@@ -48,7 +47,6 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: authService.logout,
     onSuccess: () => {
-      localStorage.removeItem('token')
       queryClient.clear()
       navigate('/login')
     },
