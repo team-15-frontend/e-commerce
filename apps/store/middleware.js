@@ -3,17 +3,19 @@ export const config = {
 }
 
 export default async function middleware(request) {
-  const backendUrl = process.env.VITE_API_URL
-  if (!backendUrl) {
-    return new Response('VITE_API_URL environment variable is missing', { status: 500 })
-  }
-  const url = new URL(request.url)
+  const backendUrl = process.env.VITE_BACKEND_URL
+  if (!backendUrl) return new Response('Missing VITE_BACKEND_URL', { status: 500 })
 
-  const targetUrl = new URL(`${url.pathname}${url.search}`, backendUrl)
+  const url = new URL(request.url)
+  const targetPath = url.pathname.replace(/^\/api/, '')
+  const targetUrl = new URL(targetPath)
+
+  const headers = new Headers(request.headers)
+  headers.set('host', targetUrl.host)
 
   return fetch(targetUrl, {
     method: request.method,
-    headers: request.headers,
+    headers: headers,
     body: ['GET', 'HEAD'].includes(request.method) ? null : request.body,
   })
 }
