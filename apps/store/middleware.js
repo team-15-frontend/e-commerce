@@ -8,7 +8,7 @@ export default async function middleware(request) {
 
   const url = new URL(request.url)
   const targetPath = url.pathname.replace(/^\/api/, '')
-  const targetUrl = new URL(targetPath)
+  const targetUrl = new URL(`${targetPath}${url.search}`, backendUrl)
 
   const headers = new Headers(request.headers)
   headers.set('host', targetUrl.host)
